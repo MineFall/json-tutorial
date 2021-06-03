@@ -1,7 +1,15 @@
 #ifndef LEPTJSON_H__
 #define LEPTJSON_H__
 
-typedef enum { LEPT_NULL, LEPT_FALSE, LEPT_TRUE, LEPT_NUMBER, LEPT_STRING, LEPT_ARRAY, LEPT_OBJECT } lept_type;
+typedef enum { 
+    LEPT_NULL, 
+    LEPT_FALSE, 
+    LEPT_TRUE, 
+    LEPT_NUMBER, 
+    LEPT_STRING, 
+    LEPT_ARRAY, 
+    LEPT_OBJECT 
+}lept_type;//lept_type允许的所有值,这个类的对象只会取其中的某一个值
 
 typedef struct {
     lept_type type;
@@ -12,7 +20,7 @@ enum {
     LEPT_PARSE_EXPECT_VALUE,//对应  纯空白  的情况
     LEPT_PARSE_INVALID_VALUE,//对应  非法值 的情况
     LEPT_PARSE_ROOT_NOT_SINGULAR//对应  值后面+空格  之后还有值的情况
-};//枚举类，处理分析的错误分类
+};//无名枚举类，处理分析的错误分类
 
 int lept_parse(lept_value* v, const char* json);//用于分析的API,  lept_value* v在分析之前没有值，而是在分析之后获得值，也就是保存分析后的结果
 //并且json值不应该被改变，所以需要用const进行修饰
