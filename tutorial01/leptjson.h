@@ -9,9 +9,9 @@ typedef struct {
 
 enum {
     LEPT_PARSE_OK = 0,
-    LEPT_PARSE_EXPECT_VALUE,
-    LEPT_PARSE_INVALID_VALUE,
-    LEPT_PARSE_ROOT_NOT_SINGULAR
+    LEPT_PARSE_EXPECT_VALUE,//对应  纯空白  的情况
+    LEPT_PARSE_INVALID_VALUE,//对应  非法值 的情况
+    LEPT_PARSE_ROOT_NOT_SINGULAR//对应  值后面+空格  之后还有值的情况
 };//枚举类，处理分析的错误分类
 
 int lept_parse(lept_value* v, const char* json);//用于分析的API,  lept_value* v在分析之前没有值，而是在分析之后获得值，也就是保存分析后的结果
