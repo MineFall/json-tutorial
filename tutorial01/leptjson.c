@@ -20,9 +20,6 @@ static int lept_parse_null(lept_context* c, lept_value* v) {
     if (c->json[0] != 'u' || c->json[1] != 'l' || c->json[2] != 'l')
         return LEPT_PARSE_INVALID_VALUE;
     c->json += 3;
-    
-    if(c->json[0]==' '&&c->json[1]!='\0')
-        return LEPT_PARSE_ROOT_NOT_SINGULAR;
     v->type = LEPT_NULL;
     return LEPT_PARSE_OK;
 }
@@ -61,7 +58,10 @@ int lept_parse(lept_value* v, const char* json) {
     c.json = json;
     v->type = LEPT_NULL;//将v的type默认设置为LEPT_NULL
     lept_parse_whitespace(&c);//跳过c.json前面的空格，换行等字符
-    return lept_parse_value(&c, v);
+    int temp=lept_parse_value(&c, v);
+    if(c.json[0]==' '&&c.json[1]!='\0')
+        return LEPT_PARSE_ROOT_NOT_SINGULAR;
+    return temp;
 }
 
 lept_type lept_get_type(const lept_value* v) {
