@@ -17,7 +17,8 @@ static void lept_parse_whitespace(lept_context* c) {
 
 static int lept_parse_number(lept_context* c, lept_value* v) {
     char* end;
-    /* \TODO validate number */
+    if()
+    
     v->n = strtod(c->json, &end);
     if (c->json == end)
         return LEPT_PARSE_INVALID_VALUE;
