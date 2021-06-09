@@ -45,7 +45,7 @@ static int lept_parse_literal(lept_context* c,lept_value* v){
         break;
     }
     case 'f':{
-        EXPECT(c,'t');
+        EXPECT(c,'f');
         if (c->json[0] != 'a' || c->json[1] != 'l' || c->json[2] != 's' || c->json[3]!='e')
         return LEPT_PARSE_INVALID_VALUE;
         c->json +=4;
