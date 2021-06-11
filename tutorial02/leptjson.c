@@ -3,6 +3,8 @@
 #include <stdlib.h>  /* NULL, strtod() */
 
 #define EXPECT(c, ch)       do { assert(*c->json == (ch)); c->json++; } while(0)
+#define ISDIGIT(ch)         ((ch) >= '0' && (ch) <= '9')
+#define ISDIGIT1TO9(ch)     ((ch) >= '1' && (ch) <= '9')
 
 typedef struct {
     const char* json;
@@ -17,9 +19,20 @@ static void lept_parse_whitespace(lept_context* c) {
 
 static int lept_parse_number(lept_context* c, lept_value* v) {
     char* end;
-    if()
-    
+    int i;
+    if(c->json[0]!='-' && !ISDIGIT(c->json[0]))//第一位不是减号，或者数字的
+        return LEPT_PARSE_INVALID_VALUE;
+    else if(c->json[0]=='0'  &&  c->json[1]!='\0')//第一位是零，但后面不为空的  json中没有16进位的表示，例如0x07等
+        return LEPT_PARSE_INVALID_VALUE;
+    for(i=0;c->json[i]!='\0';i++)
+    {
+        if(c->json[i]=='.' && !ISDIGIT(c->json[i+1]))//排除小数点后面一位没有数字的
+            return LEPT_PARSE_INVALID_VALUE;
+    }
     v->n = strtod(c->json, &end);
+    if(v->n=HUGE_VAL || v->n=-HUGE_VAL)//如果提取的数值超过了double的精度大小
+        return LEPT_PARSE_NUMBER_TOO_BIG;
+    
     if (c->json == end)
         return LEPT_PARSE_INVALID_VALUE;
     c->json = end;
